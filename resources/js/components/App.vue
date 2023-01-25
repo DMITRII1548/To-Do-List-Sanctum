@@ -4,10 +4,10 @@
             <a href="#" class="nav-link">Home</a>
         </nav>
         <nav class="d-flex gap-20">
-            <router-link :to="{ name: 'user.login' }" class="nav-link">Login</router-link>
-            <router-link :to="{ name: 'user.registration' }" class="nav-link">Registration</router-link>
-            <router-link :to="{ name: 'user.personal' }" class="nav-link">Personal</router-link>
-            <a @click.prevent="logout()" href="#" class="nav-link">Logout</a>
+            <router-link v-if="!token" :to="{ name: 'user.login' }" class="nav-link">Login</router-link>
+            <router-link v-if="!token" :to="{ name: 'user.registration' }" class="nav-link">Registration</router-link>
+            <router-link v-if="token" :to="{ name: 'user.personal' }" class="nav-link">Personal</router-link>
+            <a v-if="token" @click.prevent="logout()" href="#" class="nav-link">Logout</a>
         </nav>
 
     </footer>
@@ -19,12 +19,31 @@
 export default {
     name: 'App',
 
+    data() {
+        return {
+            token: '',
+        }
+    },
+
+    mounted() {
+        this.getToken()
+    },
+
+    updated() {
+        this.getToken()
+    },
+
     methods: {
         logout() {
             axios.post('/logout')
                 .then(res => {
+                    localStorage.removeItem('x_xsrf_token')
                     this.$router.push({ name: 'user.login' })
                 })
+        },
+
+        getToken() {
+            this.token = localStorage.getItem('x_xsrf_token')
         }
     }
 }

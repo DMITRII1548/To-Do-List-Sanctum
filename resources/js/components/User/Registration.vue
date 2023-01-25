@@ -46,6 +46,7 @@ export default {
 
                             })
                             .then(res => {
+                                localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN'])
                                 this.$router.push({ name: 'user.personal' })
                             })
                     });
