@@ -1,10 +1,58 @@
 <template>
-<div>Registration</div>
+    <div class="d-flex flex-column align-items-center">
+        <div class="w-25 mt-1">
+            <input v-model="name" type="text" placeholder="name" class="form-control">
+        </div>
+        <div class="w-25 mt-1">
+            <input v-model="email" type="email" placeholder="email" class="form-control">
+        </div>
+        <div class="w-25 mt-1">
+            <input v-model="password" type="password" placeholder="password" class="form-control">
+        </div>
+        <div class="w-25 mt-1">
+            <input v-model="password_confirmation" type="password" placeholder="password" required class="form-control">
+        </div>
+        <div class="mt-2">
+            <button @click.prevent="register()" type="submit" class="btn btn-success">Sign up</button>
+        </div>
+    </div>
 </template>
 
 <script>
 export default {
-    name: 'Registration'
+    name: 'Registration',
+
+    data() {
+        return {
+            name: '',
+            email: '',
+            password: '',
+            password_confirmation: '',
+        }
+    },
+
+    methods: {
+        register() {
+            if (this.password.length >= 8) {
+                axios.get('/sanctum/csrf-cookie')
+                    .then(response => {
+                        axios.post('/register', {
+                                name: this.name,
+                                username: this.name,
+                                email: this.email,
+                                password: this.password,
+                                password_confirmation: this.password_confirmation
+
+
+                            })
+                            .then(res => {
+                            })
+                    });
+            } else {
+                alert('Your password must have min 8 symbols')
+            }
+        }
+    }
 }
 </script>
 

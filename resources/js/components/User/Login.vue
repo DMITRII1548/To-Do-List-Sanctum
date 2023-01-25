@@ -29,8 +29,6 @@ export default {
                 .then(response => {
                     axios.post('/login', { email: this.email, password: this.password })
                         .then(res => {
-                            console.log(res)
-
                         })
                 });
         }
