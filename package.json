@@ -13,6 +13,9 @@
     },
     "dependencies": {
         "@vitejs/plugin-vue": "^4.0.0",
+        "bootstrap": "^5.2.3",
+        "path": "^0.12.7",
+        "sass": "^1.57.1",
         "vue": "^3.2.45",
         "vue-loader": "^17.0.1",
         "vue-router": "^4.0.13"
