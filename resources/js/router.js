@@ -15,6 +15,11 @@ const routes = [
         path: '/registration',
         component: () => import('./components/User/Registration.vue'),
         name: 'user.registration'
+    },
+    {
+        path: '/user/personal',
+        component: () => import('./components/User/Personal.vue'),
+        name: 'user.personal'
     }
 ]
 

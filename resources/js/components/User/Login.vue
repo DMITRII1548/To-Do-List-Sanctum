@@ -29,6 +29,7 @@ export default {
                 .then(response => {
                     axios.post('/login', { email: this.email, password: this.password })
                         .then(res => {
+                            this.$router.push({ name: 'user.personal' })
                         })
                 });
         }

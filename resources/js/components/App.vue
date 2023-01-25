@@ -6,6 +6,7 @@
         <nav class="d-flex gap-20">
             <router-link :to="{ name: 'user.login' }" class="nav-link">Login</router-link>
             <router-link :to="{ name: 'user.registration' }" class="nav-link">Registration</router-link>
+            <router-link :to="{ name: 'user.personal' }" class="nav-link">Personal</router-link>
             <a @click.prevent="logout()" href="#" class="nav-link">Logout</a>
         </nav>
 

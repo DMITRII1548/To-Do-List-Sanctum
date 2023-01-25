@@ -46,6 +46,7 @@ export default {
 
                             })
                             .then(res => {
+                                this.$router.push({ name: 'user.personal' })
                             })
                     });
             } else {
