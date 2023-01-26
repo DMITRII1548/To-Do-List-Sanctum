@@ -16,6 +16,11 @@ const routes = [
         path: '/user/personal',
         component: () => import('./components/User/Personal.vue'),
         name: 'user.personal'
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        component: () => import('./components/Error/404.vue'),
+        name: 'error.404'
     }
 ]
 
@@ -37,6 +42,8 @@ router.beforeEach((to, from, next) => {
 
     if (!token) {
         if (to.name === 'user.login' || to.name === 'user.registration') {
+            return next()
+        } else if (to.name === 'error.404') {
             return next()
         } else {
             return next({ name: 'user.login' })
