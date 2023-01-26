@@ -116,10 +116,10 @@ export default {
 
   min-height: 600px;
   margin: 0px auto;
+  margin-top: 15vh;
   width: auto;
   max-width: 460px;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
