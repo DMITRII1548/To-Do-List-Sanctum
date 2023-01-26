@@ -1,8 +1,14 @@
 <template>
-    <div>
-        <input v-model="email" type="email" placeholder="email">
-        <input v-model="password" type="password" placeholder="password">
-        <button @click.prevent="login()" type="submit">Login</button>
+    <div class="d-flex flex-column align-items-center">
+        <div class="w-25 mt-1">
+            <input v-model="email" type="email" placeholder="email" class="form-control">
+        </div>
+        <div class="w-25 mt-1">
+            <input v-model="password" type="password" placeholder="password" class="form-control">
+        </div>
+        <div class="mt-2">
+            <button @click.prevent="login()" type="submit" class="btn btn-success">Login</button>
+        </div>
     </div>
 </template>
 
@@ -23,7 +29,8 @@ export default {
                 .then(response => {
                     axios.post('/login', { email: this.email, password: this.password })
                         .then(res => {
-                            console.log(res)
+                            localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN'])
+                            this.$router.push({ name: 'user.personal' })
                         })
                 });
         }
