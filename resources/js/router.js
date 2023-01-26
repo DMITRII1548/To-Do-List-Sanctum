@@ -25,4 +25,25 @@ const router = VueRouter.createRouter({
     routes,
 })
 
+router.beforeEach((to, from, next) => {
+    const token = localStorage.getItem('x_xsrf_token')
+
+    if (token){
+        if (to.name === 'user.login' || to.name === 'user.registration') {
+            return next({ name: 'user.personal' })
+        }
+    }
+
+
+    if (!token) {
+        if (to.name === 'user.login' || to.name === 'user.registration') {
+            return next()
+        } else {
+            return next({ name: 'user.login' })
+        }
+    }
+
+    next()
+})
+
 export default router
