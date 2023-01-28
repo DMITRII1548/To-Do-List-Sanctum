@@ -12,7 +12,7 @@
                 <tr v-for="task in tasks">
                     <th scope="row">{{ task.id }}</th>
                     <td>{{ task.title }}</td>
-                    <td>@mdo</td>
+                    <td><router-link :to="{ name: 'task.show', params: { id: task.id } }" class="btn btn-primary">Open</router-link></td>
                 </tr>
             </tbody>
         </table>

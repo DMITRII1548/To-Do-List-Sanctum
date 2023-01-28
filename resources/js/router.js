@@ -28,6 +28,11 @@ const routes = [
         name: 'task.create'
     },
     {
+        path: '/task/:id',
+        component: () => import('./components/Task/Show.vue'),
+        name: 'task.show'
+    },
+    {
         path: '/:pathMatch(.*)*',
         component: () => import('./components/Error/404.vue'),
         name: 'error.404'
