@@ -45,7 +45,7 @@ class ApiTaskTest extends TestCase
             ]);
     }
 
-    public function test_post()
+    public function test_store()
     {
         Sanctum::actingAs(
             User::factory()->create(),
@@ -62,7 +62,7 @@ class ApiTaskTest extends TestCase
 
         $response
             ->assertStatus(201)
-            ->assertJson(['created' => true]);
+            ->assertJsonPath('data.title', $task['title']);
     }
 
     public function test_update()

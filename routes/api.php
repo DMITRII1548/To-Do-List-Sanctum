@@ -25,11 +25,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/me', MeController::class);
 
 
-    Route::group(['namespace' => 'App\Http\Controllers\Api\Task'], function () {
-        Route::get('/tasks', 'IndexController')->name('tasks.index');
-        Route::get('/tasks/{task}', 'ShowController')->name('tasks.show');
-        Route::post('/tasks', 'StoreController')->name('tasks.store');
-        Route::patch('/tasks/{task}', 'UpdateController')->name('tasks.update');
-        Route::delete('/tasks/{task}', 'DestroyController')->name('tasks.destroy');
+    Route::group(['namespace' => 'App\Http\Controllers\Api\Task', 'prefix' => 'tasks'], function () {
+        Route::get('/', 'IndexController')->name('tasks.index');
+        Route::get('/{task}', 'ShowController')->name('tasks.show');
+        Route::post('/', 'StoreController')->name('tasks.store');
+        Route::patch('/{task}', 'UpdateController')->name('tasks.update');
+        Route::delete('/{task}', 'DestroyController')->name('tasks.destroy');
     });
 });
