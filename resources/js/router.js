@@ -18,10 +18,15 @@ const routes = [
         name: 'user.personal'
     },
     {
+        path: '/ task',
+        component: () => import('./components/Task/Index.vue'),
+        name: 'task.index'
+    },
+    {
         path: '/:pathMatch(.*)*',
         component: () => import('./components/Error/404.vue'),
         name: 'error.404'
-    }
+    },
 ]
 
 const router = VueRouter.createRouter({

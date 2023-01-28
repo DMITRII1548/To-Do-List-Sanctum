@@ -1,7 +1,7 @@
 <template>
     <footer class="d-flex justify-content-between mt-5 mb-3">
-        <nav class="d-flex gap-20">
-            <a href="#" class="nav-link">Home</a>
+        <nav class="d-flex gap-20" v-if="token">
+            <router-link :to="{ name: 'task.index' }">Home</router-link>
         </nav>
         <nav class="d-flex gap-20">
             <router-link v-if="!token" :to="{ name: 'user.login' }" class="nav-link">Login</router-link>
