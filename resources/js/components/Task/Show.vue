@@ -1,7 +1,7 @@
 <template>
     <div class="mt-5">
         <h3>{{ task.title }}</h3>
-        <p>{{ task.text }}</p>
+        <p class="w-100">{{ task.text }}</p>
     </div>
 
 </template>

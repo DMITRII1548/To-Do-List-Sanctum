@@ -17,6 +17,7 @@ export default {
 
     data() {
         return {
+            id: null,
             title: '',
             text: ''
         }
@@ -26,7 +27,7 @@ export default {
         createTask() {
             axios.post('/api/tasks', { title: this.title, text: this.text })
                 .then(res => {
-                    this.$router.push({ name: 'task.index' })
+                    this.$router.push({ name: 'task.show', params: { id: res.data.data.id } })
                 })
         }
     },
