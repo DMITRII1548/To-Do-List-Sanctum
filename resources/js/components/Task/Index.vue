@@ -11,7 +11,7 @@
             <tbody>
                 <tr v-for="task in tasks">
                     <th scope="row">{{ task.id }}</th>
-                    <td v-if="loaded">{{ task.title }}</td>
+                    <td>{{ task.title }}</td>
                     <td>@mdo</td>
                 </tr>
             </tbody>

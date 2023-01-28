@@ -1,9 +1,9 @@
 <template>
     <div class="d-flex flex-column align-items-center">
-        <div class="w-25 mt-1">
+        <div class="w-75 mt-1">
             <input v-model="email" type="email" placeholder="email" class="form-control">
         </div>
-        <div class="w-25 mt-1">
+        <div class="w-75 mt-1">
             <input v-model="password" type="password" placeholder="password" class="form-control">
         </div>
         <div class="mt-2">

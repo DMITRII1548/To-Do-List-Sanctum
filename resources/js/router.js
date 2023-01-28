@@ -18,9 +18,14 @@ const routes = [
         name: 'user.personal'
     },
     {
-        path: '/ task',
+        path: '/task',
         component: () => import('./components/Task/Index.vue'),
         name: 'task.index'
+    },
+    {
+        path: '/task/create',
+        component: () => import('./components/Task/Create.vue'),
+        name: 'task.create'
     },
     {
         path: '/:pathMatch(.*)*',
