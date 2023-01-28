@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Task;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Task\StoreRequest;
+use App\Http\Resources\Task\TaskResource;
 use App\Models\Task;
 
 class StoreController extends Controller
@@ -13,8 +14,8 @@ class StoreController extends Controller
         $newTask = $request->validated();
         $newTask['user_id'] = auth()->user()->id;
 
-        Task::create($newTask);
+        $task = Task::create($newTask);
 
-        return response(['created' => true], 201);
+        return new TaskResource($task);
     }
 }
