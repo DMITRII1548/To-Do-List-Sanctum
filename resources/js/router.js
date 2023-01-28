@@ -18,10 +18,30 @@ const routes = [
         name: 'user.personal'
     },
     {
+        path: '/task',
+        component: () => import('./components/Task/Index.vue'),
+        name: 'task.index'
+    },
+    {
+        path: '/task/create',
+        component: () => import('./components/Task/Create.vue'),
+        name: 'task.create'
+    },
+    {
+        path: '/task/:id',
+        component: () => import('./components/Task/Show.vue'),
+        name: 'task.show'
+    },
+    {
+        path: '/task/:id/edit',
+        component: () => import('./components/Task/Edit.vue'),
+        name: 'task.edit'
+    },
+    {
         path: '/:pathMatch(.*)*',
         component: () => import('./components/Error/404.vue'),
         name: 'error.404'
-    }
+    },
 ]
 
 const router = VueRouter.createRouter({
