@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Task\UpdateController;
 use App\Http\Controllers\Api\User\MeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,10 +28,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['namespace' => 'App\Http\Controllers\Api\Task'], function () {
         Route::get('/tasks', 'IndexController')->name('tasks.index');
         Route::get('/tasks/{task}', 'ShowController')->name('tasks.show');
-        Route::post('/posts', 'StoreController')->name('tasts.store');
-        Route::patch('/posts', 'UpdateController')->name('tasks.update');
+        Route::post('/tasks', 'StoreController')->name('tasks.store');
+        Route::patch('/tasks/{task}', 'UpdateController')->name('tasks.update');
+        Route::delete('/tasks/{task}', 'DestroyController')->name('tasks.destroy');
     });
 });
-
-
-

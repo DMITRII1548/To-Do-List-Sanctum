@@ -26,7 +26,6 @@ class StoreRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'text' => 'required|string',
-            'user_id' => auth()->user()->id,
         ];
     }
 }
