@@ -26,7 +26,7 @@ export default {
         createTask() {
             axios.post('/api/tasks', { title: this.title, text: this.text })
                 .then(res => {
-                    console.log(res)
+                    this.$router.push({ name: 'task.index' })
                 })
         }
     },
