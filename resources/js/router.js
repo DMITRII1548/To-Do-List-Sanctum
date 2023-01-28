@@ -33,6 +33,11 @@ const routes = [
         name: 'task.show'
     },
     {
+        path: '/task/:id/edit',
+        component: () => import('./components/Task/Edit.vue'),
+        name: 'task.edit'
+    },
+    {
         path: '/:pathMatch(.*)*',
         component: () => import('./components/Error/404.vue'),
         name: 'error.404'
