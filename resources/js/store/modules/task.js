@@ -33,11 +33,25 @@ const actions = {
                 commit('setTask', res.data.data)
             })
     },
+
+    createTask({}, data) {
+        axios.post('/api/tasks', { title: data.title, text: data.text })
+            .then(res => {
+                router.push({ name: 'task.show', params: { id: res.data.data.id } })
+            })
+    },
+
+    updateTask({}, data) {
+        axios.patch(`/api/tasks/${data.id}`, { title: data.title, text: data.text })
+            .then(res => {
+                router.push({ name: 'task.show', props: { id: this.id } })
+            })
+    }
 }
 
 const getters = {
     tasks: state => state.tasks,
-    task: state => state.task
+    task: state => state.task,
 }
 
 const mutations = {
@@ -47,7 +61,7 @@ const mutations = {
 
     setTasks(state, tasks) {
         state.tasks = tasks
-    }
+    },
 }
 
 export default {

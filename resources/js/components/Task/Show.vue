@@ -11,8 +11,6 @@
 </template>
 
 <script>
-import Component404 from '../Error/404.vue'
-
 export default {
     name: 'Show',
 
@@ -28,10 +26,6 @@ export default {
         task() {
             return this.$store.getters.task
         }
-    },
-
-    components: {
-        Component404
     }
 }
 </script>
