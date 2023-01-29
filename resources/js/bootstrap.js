@@ -15,7 +15,7 @@ axios.defaults.withCredentials = true;
 
 window.axios.interceptors.response.use({}, error => {
     if (error.response.status === 401 || error.response.status === 419) {
-        const token = localStorage.getItem('x-xsrf_token')
+        const token = localStorage.getItem('x_xsrf_token')
 
         if (token) {
             localStorage.removeItem('x_xsrf_token')
