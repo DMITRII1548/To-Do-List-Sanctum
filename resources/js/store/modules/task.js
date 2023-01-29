@@ -13,18 +13,26 @@ const actions = {
             })
     },
 
-    destroyTask({dispatch}, id) {
+    destroyTask({ dispatch }, id) {
         axios.delete(`/api/tasks/${id}`)
             .then(res => {
-                this.dispatch('getTasks')
+                dispatch('getTasks')
+                router.push({ name: 'task.index' })
             })
     },
 
-    confirmActionDeleteTask({dispatch}, id) {
+    confirmActionDeleteTask({ dispatch }, id) {
         if (confirm('Are you really wanting to delete this task')) {
-            this.dispatch('destroyTask', id)
+            dispatch('destroyTask', id)
         }
-    }
+    },
+
+    getTask({ commit }, id) {
+        axios.get(`/api/tasks/${id}`).
+            then(res => {
+                commit('setTask', res.data.data)
+            })
+    },
 }
 
 const getters = {
