@@ -7,7 +7,7 @@
             <textarea v-model="text" placeholder="text" class="form-control" rows="15"></textarea>
         </div>
 
-        <button @click.prevent="createTask()" :disabled="isDisabled" type="submit" class="btn btn-success mt-3">Create</button>
+        <button @click.prevent="this.$store.dispatch('createTask', { title, text })" :disabled="isDisabled" type="submit" class="btn btn-success mt-3">Create</button>
     </div>
 </template>
 
@@ -17,18 +17,8 @@ export default {
 
     data() {
         return {
-            id: null,
             title: '',
             text: ''
-        }
-    },
-
-    methods: {
-        createTask() {
-            axios.post('/api/tasks', { title: this.title, text: this.text })
-                .then(res => {
-                    this.$router.push({ name: 'task.show', params: { id: res.data.data.id } })
-                })
         }
     },
 
