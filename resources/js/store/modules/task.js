@@ -28,14 +28,14 @@ const actions = {
     },
 
     getTask({ commit }, id) {
-        axios.get(`/api/tasks/${id}`).
-            then(res => {
+        axios.get(`/api/tasks/${id}`)
+            .then(res => {
                 commit('setTask', res.data.data)
             })
     },
 
     createTask({}, data) {
-        axios.post('/api/taks', { title: data.title, text: data.text })
+        axios.post('/api/tasks', { title: data.title, text: data.text })
             .then(res => {
                 router.push({ name: 'task.show', params: { id: res.data.data.id } })
             })
