@@ -18,7 +18,7 @@ const routes = [
         name: 'user.personal'
     },
     {
-        path: '/task',
+        path: '/',
         component: () => import('./components/Task/Index.vue'),
         name: 'task.index'
     },
