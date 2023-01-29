@@ -44,7 +44,7 @@ const actions = {
     updateTask({}, data) {
         axios.patch(`/api/tasks/${data.id}`, { title: data.title, text: data.text })
             .then(res => {
-                router.push({ name: 'task.show', props: { id: this.id } })
+                router.push({ name: 'task.show', props: { id: data.id } })
             })
     }
 }
