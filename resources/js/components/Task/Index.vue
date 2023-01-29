@@ -21,7 +21,7 @@
                         <router-link :to="{ name: 'task.edit', params: { id: task.id } }" class="btn btn-primary">Edit</router-link>
                     </td>
                     <td>
-                        <a @click.prevent="confirmActionDeleteTask(task.id)" href="#" class="btn btn-danger ml-1">Delete</a>
+                        <a @click.prevent="this.$store.dispatch('confirmActionDeleteTask', task.id)" href="#" class="btn btn-danger ml-1">Delete</a>
                     </td>
                 </tr>
             </tbody>
@@ -33,38 +33,15 @@
 export default {
     name: 'Index',
 
-    data() {
-        return {
-            tasks: [],
-        }
-    },
-
     mounted() {
-        this.getTasks()
+        this.$store.dispatch('getTasks')
     },
 
-    methods: {
-        getTasks() {
-            axios.get('/api/tasks')
-                .then(res => {
-                    this.tasks = res.data.data
-                })
-        },
-
-        destroyTask(id) {
-            axios.delete(`/api/tasks/${id}`)
-                .then(res => {
-                    this.getTasks()
-                })
-        },
-
-        confirmActionDeleteTask(id) {
-            if (confirm('Are you wanting to delete this task')) {
-                this.destroyTask(id)
-            }
+    computed: {
+        tasks() {
+            return this.$store.getters.tasks
         }
-    },
-
+    }
 }
 </script>
 
