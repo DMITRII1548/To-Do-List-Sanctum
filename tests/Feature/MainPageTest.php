@@ -13,10 +13,11 @@ class MainPageTest extends TestCase
      *
      * @return void
      */
-    public function test_main_page_is_returned_status_200()
+    public function test_main_page_is_returned_status_200_and_view()
     {
         $response = $this->get('/');
 
         $response->assertOk();
+        $response->assertViewIs('main');
     }
 }
