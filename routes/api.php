@@ -22,10 +22,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::post('/me', MeController::class);
+    Route::post('/me', MeController::class)->name('user.me');
 
 
-    Route::group(['namespace' => 'App\Http\Controllers\Api\Task', 'prefix' => 'tasks'], function () {
+    Route::group([
+        'namespace' => 'App\Http\Controllers\Api\Task',
+        'prefix' => 'tasks',
+        'middleware' => 'verified'
+
+
+    ], function () {
         Route::get('/', 'IndexController')->name('tasks.index');
         Route::get('/{task}', 'ShowController')->name('tasks.show');
         Route::post('/', 'StoreController')->name('tasks.store');
