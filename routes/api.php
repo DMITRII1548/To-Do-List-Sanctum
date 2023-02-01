@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::post('/me', MeController::class);
+    Route::post('/me', MeController::class)->name('user.me');
 
 
     Route::group([
