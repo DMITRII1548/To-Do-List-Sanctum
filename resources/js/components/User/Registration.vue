@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import router from '../../router'
+
 export default {
     name: 'Registration',
 
@@ -46,8 +48,12 @@ export default {
 
                             })
                             .then(res => {
+                                console.log(res)
+                                localStorage.setItem('verified_email', 'unverified')
                                 localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN'])
-                                this.$router.push({ name: 'user.personal' })
+                                router.push({ name: 'user.email-verification' })
+
+
                             })
                     });
             } else {

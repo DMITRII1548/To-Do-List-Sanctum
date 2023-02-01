@@ -30,7 +30,14 @@ export default {
                     axios.post('/login', { email: this.email, password: this.password })
                         .then(res => {
                             localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN'])
-                            this.$router.push({ name: 'user.personal' })
+                            axios.post('/api/me')
+                                .then(res => {
+                                    console.log(res.data.data.email_verified)
+                                    if (res.data.data.email_verified) {
+                                        localStorage.setItem('verified_email', 'verified')
+                                        this.$router.push({ name: 'user.personal' })
+                                    }
+                                })
                         })
                 });
         }

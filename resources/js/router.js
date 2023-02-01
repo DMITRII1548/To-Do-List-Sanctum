@@ -18,6 +18,11 @@ const routes = [
         name: 'user.personal'
     },
     {
+        path: '/user/email-verification',
+        component: () => import('./components/User/EmailVerification.vue'),
+        name: 'user.email-verification'
+    },
+    {
         path: '/',
         component: () => import('./components/Task/Index.vue'),
         name: 'task.index'
@@ -52,13 +57,16 @@ const router = VueRouter.createRouter({
 
 router.beforeEach((to, from, next) => {
     const token = localStorage.getItem('x_xsrf_token')
-
-    if (token){
+    const isEmailVerificated = localStorage.getItem('verified_email')
+    console.log(isEmailVerificated)
+    if (token && isEmailVerificated === 'verified'){
+        console.log('router')
         if (to.name === 'user.login' || to.name === 'user.registration') {
             return next({ name: 'user.personal' })
         }
-    }
 
+        return next()
+    }
 
     if (!token) {
         if (to.name === 'user.login' || to.name === 'user.registration') {
@@ -67,6 +75,14 @@ router.beforeEach((to, from, next) => {
             return next()
         } else {
             return next({ name: 'user.login' })
+        }
+    }
+
+    if (!isEmailVerificated || isEmailVerificated === 'unverified') {
+        if (to.name  === 'user.login' || to.name === 'user.registration' || to.name === 'user.email-verification') {
+            return next()
+        } else {
+            return next({ name: 'user.email-verification' })
         }
     }
 
