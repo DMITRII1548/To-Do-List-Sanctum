@@ -57,36 +57,77 @@ const router = VueRouter.createRouter({
 
 router.beforeEach((to, from, next) => {
     const token = localStorage.getItem('x_xsrf_token')
-    const isEmailVerificated = localStorage.getItem('verified_email')
-    console.log(isEmailVerificated)
-    if (token && isEmailVerificated === 'verified'){
-        console.log('router')
-        if (to.name === 'user.login' || to.name === 'user.registration') {
+    const isEmailVerificatedStatus = localStorage.getItem('verified_email')
+
+    if (token) {
+        if (to.name === 'user.email-verification' && isEmailVerificatedStatus === 'verified') {
             return next({ name: 'user.personal' })
-        }
-
-        return next()
-    }
-
-    if (!token) {
-        if (to.name === 'user.login' || to.name === 'user.registration') {
+        } else if (!isEmailVerificatedStatus || isEmailVerificatedStatus === 'unverified') {
+            if (to.name === 'user.email-verification') {
+                return next()
+            } else {
+                return next({ name: 'user.email-verification' })
+            }
+        } else if (to.name === 'user.login' || to.name === 'user.registration') {
+            return next({ name: 'user.personal' })
+        } else {
             return next()
-        } else if (to.name === 'error.404') {
+        }
+    } else {
+        if (to.name === 'user.login' || to.name === 'user.registration' || to.name === 'error.404') {
             return next()
         } else {
             return next({ name: 'user.login' })
         }
     }
-
-    if (!isEmailVerificated || isEmailVerificated === 'unverified') {
-        if (to.name  === 'user.login' || to.name === 'user.registration' || to.name === 'user.email-verification') {
-            return next()
-        } else {
-            return next({ name: 'user.email-verification' })
-        }
-    }
-
-    next()
 })
+
+// router.beforeEach((to, from, next) => {
+//     const token = localStorage.getItem('x_xsrf_token')
+//     const isEmailVerificated = localStorage.getItem('verified_email')
+
+//     if (!token) {
+//         if (to.name === 'user.login' || to.name === 'user.registration') {
+//             return next()
+//         } else if (to.name === 'error.404') {
+//             return next()
+//         } else {
+//             return next({ name: 'user.login' })
+//         }
+//     }
+
+//     if (token){
+//         if (to.name === 'user.email-verification' && isEmailVerificated === 'verified') {
+//             return next({ name: 'user.personal' })
+//         } else {
+//             return next({ name: 'user.email-verification' })
+//         }
+
+//         if ((!isEmailVerificated || isEmailVerificated === 'unverified') && token) {
+//             return next({ name: 'user.email-verification' })
+//         }
+
+//         if (to.name === 'user.login' || to.name === 'user.registration') {
+//             return next({ name: 'user.personal' })
+//         }
+
+//         if (isEmailVerificated === 'verified') {
+//             if (to.name === 'user.login' || to.name === 'user.registration' || to.name === 'user.email-verification') {
+//                 return next({ name: 'user.personal' })
+//             }
+
+//             return next()
+//         }
+
+//         if (to.name === 'user.personal' && (!isEmailVerificated || isEmailVerificated === 'unverified')) {
+//             return next({ name: 'user.email-verification' })
+//         }
+
+//         return next()
+
+//     }
+
+//     next()
+// })
 
 export default router

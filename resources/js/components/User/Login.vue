@@ -7,7 +7,10 @@
             <input v-model="password" type="password" placeholder="password" class="form-control">
         </div>
         <div class="mt-2">
-            <button @click.prevent="login()" type="submit" class="btn btn-success">Login</button>
+            <button :disabled="isDisabled" @click.prevent="login()" type="submit" class="btn btn-success">Login</button>
+        </div>
+        <div class="mt-4 text-danger">
+            {{ warning }}
         </div>
     </div>
 </template>
@@ -19,7 +22,8 @@ export default {
     data() {
         return {
             email: '',
-            password: ''
+            password: '',
+            warning: ''
         }
     },
 
@@ -27,19 +31,37 @@ export default {
         login() {
             axios.get('/sanctum/csrf-cookie')
                 .then(response => {
+
                     axios.post('/login', { email: this.email, password: this.password })
                         .then(res => {
                             localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN'])
-                            axios.post('/api/me')
+
+                            axios.post('/api/users/me')
                                 .then(res => {
-                                    console.log(res.data.data.email_verified)
                                     if (res.data.data.email_verified) {
                                         localStorage.setItem('verified_email', 'verified')
                                         this.$router.push({ name: 'user.personal' })
+                                    } else {
+                                        localStorage.removeItem('x_xsrf_token')
+                                        axios.delete(`/api/users/${res.data.data.id}`)
+                                            .then(res => { })
+
+                                        this.warning = 'this user does not exists'
                                     }
+
                                 })
                         })
+                        .catch(error => {
+                            this.warning = 'this user does not exists'
+                        })
                 });
+
+        }
+    },
+
+    computed: {
+        isDisabled() {
+            return this.email === '' || this.password === ''
         }
     }
 }

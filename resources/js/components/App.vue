@@ -1,13 +1,13 @@
 <template>
     <footer class="d-flex justify-content-between mt-5 mb-3">
-        <nav class="d-flex gap-20" v-if="token">
+        <nav class="d-flex gap-20" v-if="token && isEmailVerificatedStatus">
             <router-link :to="{ name: 'task.index' }" class="nav-link">Home</router-link>
             <router-link :to="{ name: 'task.create' }" class="nav-link">Create</router-link>
         </nav>
         <nav class="d-flex gap-20">
-            <router-link v-if="!token" :to="{ name: 'user.login' }" class="nav-link">Login</router-link>
-            <router-link v-if="!token" :to="{ name: 'user.registration' }" class="nav-link">Registration</router-link>
-            <router-link v-if="token" :to="{ name: 'user.personal' }" class="nav-link">Personal</router-link>
+            <router-link v-if="!token && !isEmailVerificatedStatus" :to="{ name: 'user.login' }" class="nav-link">Login</router-link>
+            <router-link v-if="!token && !isEmailVerificatedStatus" :to="{ name: 'user.registration' }" class="nav-link">Registration</router-link>
+            <router-link v-if="token && isEmailVerificatedStatus" :to="{ name: 'user.personal' }" class="nav-link">Personal</router-link>
             <a v-if="token" @click.prevent="logout()" href="#" class="nav-link">Logout</a>
         </nav>
 
@@ -23,15 +23,18 @@ export default {
     data() {
         return {
             token: '',
+            isEmailVerificatedStatus: null
         }
     },
 
     mounted() {
         this.getToken()
+        this.getEmailVerificatedStatus()
     },
 
     updated() {
         this.getToken()
+        this.getEmailVerificatedStatus()
     },
 
     methods: {
@@ -46,6 +49,16 @@ export default {
 
         getToken() {
             this.token = localStorage.getItem('x_xsrf_token')
+        },
+
+        getEmailVerificatedStatus() {
+            let isEmailVerificatedStatus = localStorage.getItem('verified_email')
+
+            if (isEmailVerificatedStatus === 'verified') {
+                this.isEmailVerificatedStatus = true
+            } else {
+                this.isEmailVerificatedStatus = false
+            }
         }
     }
 }

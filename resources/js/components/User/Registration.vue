@@ -13,7 +13,10 @@
             <input v-model="password_confirmation" type="password" placeholder="password" required class="form-control">
         </div>
         <div class="mt-2">
-            <button @click.prevent="register()" type="submit" class="btn btn-success">Sign up</button>
+            <button :disabled="isDisabled" @click.prevent="register()" type="submit" class="btn btn-success">Sign up</button>
+        </div>
+        <div class="mt-2 text-danger">
+            {{ warning }}
         </div>
     </div>
 </template>
@@ -30,12 +33,15 @@ export default {
             email: '',
             password: '',
             password_confirmation: '',
+            warning: ''
         }
     },
 
     methods: {
         register() {
-            if (this.password.length >= 8) {
+            if (this.password !== this.password_confirmation) {
+                this.warning = 'Your password is not conrirmed'
+            } else if (this.password.length >= 8) {
                 axios.get('/sanctum/csrf-cookie')
                     .then(response => {
                         axios.post('/register', {
@@ -48,17 +54,23 @@ export default {
 
                             })
                             .then(res => {
-                                console.log(res)
                                 localStorage.setItem('verified_email', 'unverified')
                                 localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN'])
+                                this.warning = 'Check your email'
                                 router.push({ name: 'user.email-verification' })
-
+                                alert('Check your email and confirm your email.')
 
                             })
                     });
             } else {
-                alert('Your password must have min 8 symbols')
+                this.warning = 'Your password must have min 8 symbols'
             }
+        }
+    },
+
+    computed: {
+        isDisabled() {
+            return this.name === '' || this.email === '' || this.password === '' || this.password_confirmation === ''
         }
     }
 }
