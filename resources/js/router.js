@@ -60,9 +60,9 @@ router.beforeEach((to, from, next) => {
     const isEmailVerificatedStatus = localStorage.getItem('verified_email')
 
     if (token) {
-        if (to.name === 'user.email-verification' && isEmailVerificatedStatus === 'verified') {
+        if (to.name === 'user.email-verification' && isEmailVerificatedStatus) {
             return next({ name: 'user.personal' })
-        } else if (!isEmailVerificatedStatus || isEmailVerificatedStatus === 'unverified') {
+        } else if (!isEmailVerificatedStatus) {
             if (to.name === 'user.email-verification') {
                 return next()
             } else {

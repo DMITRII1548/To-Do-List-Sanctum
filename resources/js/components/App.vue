@@ -42,7 +42,7 @@ export default {
             axios.post('/logout')
                 .then(res => {
                     localStorage.removeItem('x_xsrf_token')
-                    localStorage.setItem('verified_email', 'unverified')
+                    localStorage.removeItem('verified_email')
                     this.$router.push({ name: 'user.login' })
                 })
         },
@@ -54,7 +54,7 @@ export default {
         getEmailVerificatedStatus() {
             let isEmailVerificatedStatus = localStorage.getItem('verified_email')
 
-            if (isEmailVerificatedStatus === 'verified') {
+            if (isEmailVerificatedStatus) {
                 this.isEmailVerificatedStatus = true
             } else {
                 this.isEmailVerificatedStatus = false

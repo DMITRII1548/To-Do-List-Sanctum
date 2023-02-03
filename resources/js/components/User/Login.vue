@@ -39,7 +39,7 @@ export default {
                             axios.post('/api/users/me')
                                 .then(res => {
                                     if (res.data.data.email_verified) {
-                                        localStorage.setItem('verified_email', 'verified')
+                                        localStorage.setItem('verified_email', true)
                                         this.$router.push({ name: 'user.personal' })
                                     } else {
                                         localStorage.removeItem('x_xsrf_token')

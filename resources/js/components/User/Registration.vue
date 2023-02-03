@@ -54,7 +54,7 @@ export default {
 
                             })
                             .then(res => {
-                                localStorage.setItem('verified_email', 'unverified')
+                                localStorage.removeItem('verified_email')
                                 localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN'])
                                 this.warning = 'Check your email'
                                 router.push({ name: 'user.email-verification' })
