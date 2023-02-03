@@ -22,9 +22,14 @@ export default {
 
     methods: {
         getUser() {
-            axios.post('/api/me')
+            axios.post('/api/users/me')
                 .then(res => {
+                    if (!res.data.data.email_verificated) {
+                        this.$router.push({ name: 'user.email-verification' })
+                    }
+
                     this.name = res.data.data.name
+
                 })
         }
     }

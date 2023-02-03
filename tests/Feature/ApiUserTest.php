@@ -24,7 +24,7 @@ class ApiUserTest extends TestCase
             ['view-tasks']
         );
 
-        $response = $this->post(route('user.me'));
+        $response = $this->post(route('users.me'));
 
         $response
             ->assertJsonPath('data.name', $user->name)
@@ -37,5 +37,18 @@ class ApiUserTest extends TestCase
                 ]
             ])
             ->assertOk();
+    }
+
+    public function test_route_user_destroy()
+    {
+        $user = Sanctum::actingAs(
+            User::factory()->create(),
+            ['view-tasks']
+        );
+
+        $response = $this->deleteJson(route('users.destroy', $user->id));
+        $response
+            ->assertOk()
+            ->assertJson(['destroied' => true]);
     }
 }
