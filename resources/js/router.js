@@ -74,14 +74,12 @@ router.beforeEach((to, from, next) => {
             return next()
         }
     } else {
-        if (to.name === 'user.login' || to.name === 'user.registration') {
+        if (to.name === 'user.login' || to.name === 'user.registration' || to.name === 'error.404') {
             return next()
         } else {
             return next({ name: 'user.login' })
         }
     }
-
-    next()
 })
 
 // router.beforeEach((to, from, next) => {
