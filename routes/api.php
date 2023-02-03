@@ -23,8 +23,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::post('/me', MeController::class)->name('users.me');
-    Route::delete('{user}', DestroyController::class)->name('users.destroy');
+    Route::prefix('users')->group(function () {
+        Route::post('/me', MeController::class)->name('users.me');
+        Route::delete('/{user}', DestroyController::class)->name('users.destroy');
+    });
+
 
 
     Route::group([

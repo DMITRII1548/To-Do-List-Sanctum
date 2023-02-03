@@ -18,19 +18,28 @@ export default {
     data() {
         return {
             abilitySendEmailAgain: 60,
+            timerSetInterval: null
         }
     },
 
     created() {
         this.isVerifiedEmail()
 
-        setInterval(() => {
+        this.timerSetInterval = setInterval(() => {
             this.isVerifiedEmail()
         }, 10000)
     },
 
     mounted() {
         this.countDownTimer()
+    },
+
+    updated() {
+        clearInterval(this.timerSetInterval)
+    },
+
+    destroyed() {
+        clearInterval(this.timerSetInterval)
     },
 
     methods: {
@@ -50,16 +59,14 @@ export default {
         sendEmailVerificationAgain() {
             axios.post('/email/verification-notification')
                 .then(res => {
-                    console.log(res)
                     this.abilitySendEmailAgain = 60
                     this.countDownTimer()
                 })
         },
 
         isVerifiedEmail() {
-            axios.post('/api/me')
+            axios.post('/api/users/me')
                 .then(res => {
-                    console.log(res.data.data.email_verified)
                     if (res.data.data.email_verified) {
                         localStorage.setItem('verified_email', 'verified')
                         this.$router.push({ name: 'user.personal' })
