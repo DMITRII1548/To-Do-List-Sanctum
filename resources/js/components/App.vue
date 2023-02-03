@@ -52,13 +52,7 @@ export default {
         },
 
         getEmailVerificatedStatus() {
-            let isEmailVerificatedStatus = localStorage.getItem('verified_email')
-
-            if (isEmailVerificatedStatus) {
-                this.isEmailVerificatedStatus = true
-            } else {
-                this.isEmailVerificatedStatus = false
-            }
+            this.isEmailVerificatedStatus = localStorage.getItem('verified_email')
         }
     }
 }

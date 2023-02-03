@@ -13,7 +13,7 @@
             <input v-model="password_confirmation" type="password" placeholder="password" required class="form-control">
         </div>
         <div class="mt-2">
-            <button :disabled="isDisabled" @click.prevent="register()" type="submit" class="btn btn-success">Sign up</button>
+            <button :disabled="isDisabled" @click.prevent="checkDataAndRegister()" type="submit" class="btn btn-success">Sign up</button>
         </div>
         <div class="mt-2 text-danger">
             {{ warning }}
@@ -38,34 +38,47 @@ export default {
     },
 
     methods: {
-        register() {
+        checkDataAndRegister() {
             if (this.password !== this.password_confirmation) {
                 this.warning = 'Your password is not conrirmed'
             } else if (this.password.length >= 8) {
-                axios.get('/sanctum/csrf-cookie')
-                    .then(response => {
-                        axios.post('/register', {
-                                name: this.name,
-                                username: this.name,
-                                email: this.email,
-                                password: this.password,
-                                password_confirmation: this.password_confirmation
-
-
-                            })
-                            .then(res => {
-                                localStorage.removeItem('verified_email')
-                                localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN'])
-                                this.warning = 'Check your email'
-                                router.push({ name: 'user.email-verification' })
-                                alert('Check your email and confirm your email.')
-
-                            })
-                    });
+                this.register()
             } else {
                 this.warning = 'Your password must have min 8 symbols'
             }
+        },
+
+        register() {
+            axios.get('/sanctum/csrf-cookie')
+                .then(response => {
+                    axios.post('/register', this.getKeysAndValuesForResiter())
+                        .then(res => {
+                            this.afterRegisterSuccess(res.config.headers['X-XSRF-TOKEN'])
+
+                        })
+                });
+        },
+
+        getKeysAndValuesForResiter() {
+            return {
+                name: this.name,
+                username: this.name,
+                email: this.email,
+                password: this.password,
+                password_confirmation: this.password_confirmation
+            }
+
+        },
+
+        afterRegisterSuccess(token) {
+            localStorage.removeItem('verified_email')
+            localStorage.setItem('x_xsrf_token', token)
+            this.warning = 'Check your email'
+            router.push({ name: 'user.email-verification' })
+            alert('Check your email and confirm your email.')
         }
+
+
     },
 
     computed: {

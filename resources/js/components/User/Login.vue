@@ -34,28 +34,35 @@ export default {
 
                     axios.post('/login', { email: this.email, password: this.password })
                         .then(res => {
-                            localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN'])
-
-                            axios.post('/api/users/me')
-                                .then(res => {
-                                    if (res.data.data.email_verified) {
-                                        localStorage.setItem('verified_email', true)
-                                        this.$router.push({ name: 'user.personal' })
-                                    } else {
-                                        localStorage.removeItem('x_xsrf_token')
-                                        axios.delete(`/api/users/${res.data.data.id}`)
-                                            .then(res => { })
-
-                                        this.warning = 'this user does not exists'
-                                    }
-
-                                })
+                            this.afterLogin(res.config.headers['X-XSRF-TOKEN'])
                         })
                         .catch(error => {
                             this.warning = 'this user does not exists'
                         })
                 });
 
+        },
+
+        afterLogin(token) {
+            localStorage.setItem('x_xsrf_token', token)
+
+            axios.post('/api/users/me')
+                .then(res => {
+                    this.checkVerifiedEmail(res.data.data.id, res.data.data.email_verified)
+                })
+        },
+
+        checkVerifiedEmail(id, verifiedEmail) {
+            if (verifiedEmail) {
+                localStorage.setItem('verified_email', true)
+                this.$router.push({ name: 'user.personal' })
+            } else {
+                localStorage.removeItem('x_xsrf_token')
+                axios.delete(`/api/users/${id}`)
+                    .then(res => { })
+
+                this.warning = 'this user does not exists'
+            }
         }
     },
 
