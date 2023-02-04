@@ -11,9 +11,13 @@ class DestroyController extends Controller
 
     public function __invoke(User $user)
     {
-        $user->delete();
+        if (auth()->user()->id === $user->id) {
+            $user->delete();
 
-        return response(['destroied' => true]);
+            return response(['destroyed' => true]);
+        }
+
+        return response(['destroyed' => false], 403);
     }
 
 }

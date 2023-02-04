@@ -46,9 +46,16 @@ class ApiUserTest extends TestCase
             ['view-tasks']
         );
 
+        $unAuthUser = User::factory()->create();
+
         $response = $this->deleteJson(route('users.destroy', $user->id));
         $response
             ->assertOk()
-            ->assertJson(['destroied' => true]);
+            ->assertJson(['destroyed' => true]);
+
+        $response = $this->deleteJson(route('users.destroy', $unAuthUser->id));
+        $response
+            ->assertStatus(403)
+            ->assertJson(['destroyed' => false]);
     }
 }
