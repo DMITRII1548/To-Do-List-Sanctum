@@ -5,47 +5,47 @@ const routes = [
     {
         path: '/login',
         component: () => import('./components/User/Login.vue'),
-        name: 'user.login'
+        name: 'users.login'
     },
     {
         path: '/registration',
         component: () => import('./components/User/Registration.vue'),
-        name: 'user.registration'
+        name: 'users.registration'
     },
     {
-        path: '/user/personal',
+        path: '/users/personal',
         component: () => import('./components/User/Personal.vue'),
-        name: 'user.personal'
+        name: 'users.personal'
     },
     {
-        path: '/user/email-verification',
+        path: '/users/email-verification',
         component: () => import('./components/User/EmailVerification.vue'),
-        name: 'user.email-verification'
+        name: 'users.email-verification'
     },
     {
         path: '/',
         component: () => import('./components/Task/Index.vue'),
-        name: 'task.index'
+        name: 'tasks.index'
     },
     {
-        path: '/task/create',
+        path: '/tasks/create',
         component: () => import('./components/Task/Create.vue'),
-        name: 'task.create'
+        name: 'tasks.create'
     },
     {
-        path: '/task/:id',
+        path: '/tasks/:id',
         component: () => import('./components/Task/Show.vue'),
-        name: 'task.show'
+        name: 'tasks.show'
     },
     {
-        path: '/task/:id/edit',
+        path: '/tasks/:id/edit',
         component: () => import('./components/Task/Edit.vue'),
-        name: 'task.edit'
+        name: 'tasks.edit'
     },
     {
         path: '/:pathMatch(.*)*',
         component: () => import('./components/Error/404.vue'),
-        name: 'error.404'
+        name: 'errors.404'
     },
 ]
 
@@ -57,77 +57,29 @@ const router = VueRouter.createRouter({
 
 router.beforeEach((to, from, next) => {
     const token = localStorage.getItem('x_xsrf_token')
-    const isEmailVerificatedStatus = localStorage.getItem('verified_email')
+    const isEmailVerificatedStatus = localStorage.getItem('verified_email_status')
 
     if (token) {
-        if (to.name === 'user.email-verification' && isEmailVerificatedStatus === 'verified') {
-            return next({ name: 'user.personal' })
-        } else if (!isEmailVerificatedStatus || isEmailVerificatedStatus === 'unverified') {
-            if (to.name === 'user.email-verification') {
+        if (to.name === 'users.email-verification' && isEmailVerificatedStatus) {
+            return next({ name: 'users.personal' })
+        } else if (!isEmailVerificatedStatus) {
+            if (to.name === 'users.email-verification') {
                 return next()
             } else {
-                return next({ name: 'user.email-verification' })
+                return next({ name: 'users.email-verification' })
             }
-        } else if (to.name === 'user.login' || to.name === 'user.registration') {
-            return next({ name: 'user.personal' })
+        } else if (to.name === 'users.login' || to.name === 'users.registration') {
+            return next({ name: 'users.personal' })
         } else {
             return next()
         }
     } else {
-        if (to.name === 'user.login' || to.name === 'user.registration' || to.name === 'error.404') {
+        if (to.name === 'users.login' || to.name === 'users.registration' || to.name === 'errors.404') {
             return next()
         } else {
-            return next({ name: 'user.login' })
+            return next({ name: 'users.login' })
         }
     }
 })
-
-// router.beforeEach((to, from, next) => {
-//     const token = localStorage.getItem('x_xsrf_token')
-//     const isEmailVerificated = localStorage.getItem('verified_email')
-
-//     if (!token) {
-//         if (to.name === 'user.login' || to.name === 'user.registration') {
-//             return next()
-//         } else if (to.name === 'error.404') {
-//             return next()
-//         } else {
-//             return next({ name: 'user.login' })
-//         }
-//     }
-
-//     if (token){
-//         if (to.name === 'user.email-verification' && isEmailVerificated === 'verified') {
-//             return next({ name: 'user.personal' })
-//         } else {
-//             return next({ name: 'user.email-verification' })
-//         }
-
-//         if ((!isEmailVerificated || isEmailVerificated === 'unverified') && token) {
-//             return next({ name: 'user.email-verification' })
-//         }
-
-//         if (to.name === 'user.login' || to.name === 'user.registration') {
-//             return next({ name: 'user.personal' })
-//         }
-
-//         if (isEmailVerificated === 'verified') {
-//             if (to.name === 'user.login' || to.name === 'user.registration' || to.name === 'user.email-verification') {
-//                 return next({ name: 'user.personal' })
-//             }
-
-//             return next()
-//         }
-
-//         if (to.name === 'user.personal' && (!isEmailVerificated || isEmailVerificated === 'unverified')) {
-//             return next({ name: 'user.email-verification' })
-//         }
-
-//         return next()
-
-//     }
-
-//     next()
-// })
 
 export default router
