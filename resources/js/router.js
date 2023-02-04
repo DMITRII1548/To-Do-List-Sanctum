@@ -57,7 +57,7 @@ const router = VueRouter.createRouter({
 
 router.beforeEach((to, from, next) => {
     const token = localStorage.getItem('x_xsrf_token')
-    const isEmailVerificatedStatus = localStorage.getItem('verified_email')
+    const isEmailVerificatedStatus = localStorage.getItem('verified_email_status')
 
     if (token) {
         if (to.name === 'users.email-verification' && isEmailVerificatedStatus) {

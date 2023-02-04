@@ -54,7 +54,7 @@ export default {
 
         checkVerifiedEmail(id, verifiedEmail) {
             if (verifiedEmail) {
-                localStorage.setItem('verified_email', true)
+                localStorage.setItem('verified_email_status', true)
                 this.$router.push({ name: 'users.personal' })
             } else {
                 localStorage.removeItem('x_xsrf_token')

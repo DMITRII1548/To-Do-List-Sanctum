@@ -18,14 +18,14 @@ window.axios.interceptors.response.use({}, error => {
 
     if (error.response.status === 401 || error.response.status === 419) {
         const token = localStorage.getItem('x_xsrf_token')
-        const isEmailVerificated = localStorage.getItem('verified_email')
+        const isEmailVerificated = localStorage.getItem('verified_email_status')
 
         if (token) {
             localStorage.removeItem('x_xsrf_token')
         }
 
         if (isEmailVerificated === 'verified') {
-            localStorage.removeItem('verified_email')
+            localStorage.removeItem('verified_email_status')
         }
 
 
@@ -38,7 +38,7 @@ window.axios.interceptors.response.use({}, error => {
             })
 
         localStorage.removeItem('x_xsrf_token')
-        localStorage.removeItem('verified_email')
+        localStorage.removeItem('verified_email_status')
 
         router.push({ name: 'users.login' })
     }
@@ -49,7 +49,7 @@ window.axios.interceptors.response.use({}, error => {
             })
 
         localStorage.removeItem('x_xsrf_token')
-        localStorage.removeItem('verified_email')
+        localStorage.removeItem('verified_email_status')
         router.push({ name: 'users.login' })
     }
 })

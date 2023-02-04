@@ -69,7 +69,7 @@ export default {
         },
 
         afterRegisterSuccess(token) {
-            localStorage.removeItem('verified_email')
+            localStorage.removeItem('verified_email_status')
             localStorage.setItem('x_xsrf_token', token)
             this.warning = 'Check your email'
             this.$router.push({ name: 'users.email-verification' })
