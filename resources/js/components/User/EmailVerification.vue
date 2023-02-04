@@ -68,8 +68,8 @@ export default {
             axios.post('/api/users/me')
                 .then(res => {
                     if (res.data.data.email_verified) {
-                        localStorage.setItem('verified_email', 'verified')
-                        this.$router.push({ name: 'user.personal' })
+                        localStorage.setItem('verified_email_status', true)
+                        this.$router.push({ name: 'users.personal' })
                     }
                 })
 

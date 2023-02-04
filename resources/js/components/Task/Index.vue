@@ -15,10 +15,10 @@
                     <th scope="row">{{ task.id }}</th>
                     <td>{{ task.title }}</td>
                     <td>
-                        <router-link :to="{ name: 'task.show', params: { id: task.id } }" class="btn btn-success">Open</router-link>
+                        <router-link :to="{ name: 'tasks.show', params: { id: task.id } }" class="btn btn-success">Open</router-link>
                     </td>
                     <td>
-                        <router-link :to="{ name: 'task.edit', params: { id: task.id } }" class="btn btn-primary">Edit</router-link>
+                        <router-link :to="{ name: 'tasks.edit', params: { id: task.id } }" class="btn btn-primary">Edit</router-link>
                     </td>
                     <td>
                         <a @click.prevent="this.$store.dispatch('confirmActionDeleteTask', task.id)" href="#" class="btn btn-danger ml-1">Delete</a>

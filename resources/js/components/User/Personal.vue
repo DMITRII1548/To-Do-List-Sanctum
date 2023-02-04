@@ -25,7 +25,7 @@ export default {
             axios.post('/api/users/me')
                 .then(res => {
                     if (!res.data.data.email_verificated) {
-                        this.$router.push({ name: 'user.email-verification' })
+                        this.$router.push({ name: 'users.email-verification' })
                     }
 
                     this.name = res.data.data.name

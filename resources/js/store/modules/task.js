@@ -17,7 +17,7 @@ const actions = {
         axios.delete(`/api/tasks/${id}`)
             .then(res => {
                 dispatch('getTasks')
-                router.push({ name: 'task.index' })
+                router.push({ name: 'tasks.index' })
             })
     },
 
@@ -37,14 +37,14 @@ const actions = {
     createTask({}, data) {
         axios.post('/api/tasks', { title: data.title, text: data.text })
             .then(res => {
-                router.push({ name: 'task.show', params: { id: res.data.data.id } })
+                router.push({ name: 'tasks.show', params: { id: res.data.data.id } })
             })
     },
 
     updateTask({}, data) {
         axios.patch(`/api/tasks/${data.id}`, { title: data.title, text: data.text })
             .then(res => {
-                router.push({ name: 'task.show', props: { id: data.id } })
+                router.push({ name: 'tasks.show', props: { id: data.id } })
             })
     }
 }
