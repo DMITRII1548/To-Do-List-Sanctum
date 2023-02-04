@@ -22,8 +22,6 @@
 </template>
 
 <script>
-import router from '../../router'
-
 export default {
     name: 'Registration',
 
@@ -74,7 +72,7 @@ export default {
             localStorage.removeItem('verified_email')
             localStorage.setItem('x_xsrf_token', token)
             this.warning = 'Check your email'
-            router.push({ name: 'user.email-verification' })
+            this.$router.push({ name: 'users.email-verification' })
             alert('Check your email and confirm your email.')
         }
 

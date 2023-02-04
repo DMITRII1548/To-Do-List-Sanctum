@@ -29,7 +29,7 @@ window.axios.interceptors.response.use({}, error => {
         }
 
 
-        router.push({ name: 'user.login' })
+        router.push({ name: 'users.login' })
     }
 
     if (error.response.status === 403) {
@@ -40,7 +40,7 @@ window.axios.interceptors.response.use({}, error => {
         localStorage.removeItem('x_xsrf_token')
         localStorage.removeItem('verified_email')
 
-        router.push({ name: 'user.login' })
+        router.push({ name: 'users.login' })
     }
 
     if (error.response.status === 422) {
@@ -50,7 +50,7 @@ window.axios.interceptors.response.use({}, error => {
 
         localStorage.removeItem('x_xsrf_token')
         localStorage.removeItem('verified_email')
-        router.push({ name: 'user.login' })
+        router.push({ name: 'users.login' })
     }
 })
 /**

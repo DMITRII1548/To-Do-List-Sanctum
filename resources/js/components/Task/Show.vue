@@ -1,7 +1,7 @@
 <template>
     <div class="mt-4">
-        <router-link :to="{ name: 'task.index' }" class="btn btn-success">Back</router-link>
-        <router-link :to="{ name: 'task.edit', props: { id: task.id } }" class="btn btn-primary m-1">Edit</router-link>
+        <router-link :to="{ name: 'tasks.index' }" class="btn btn-success">Back</router-link>
+        <router-link :to="{ name: 'tasks.edit', props: { id: task.id } }" class="btn btn-primary m-1">Edit</router-link>
         <a @click.prevent="this.$store.dispatch('confirmActionDeleteTask', task.id)" href="#" class="btn btn-danger m-1">Delete</a>
     </div>
     <div class="mt-3">

@@ -55,7 +55,7 @@ export default {
         checkVerifiedEmail(id, verifiedEmail) {
             if (verifiedEmail) {
                 localStorage.setItem('verified_email', true)
-                this.$router.push({ name: 'user.personal' })
+                this.$router.push({ name: 'users.personal' })
             } else {
                 localStorage.removeItem('x_xsrf_token')
                 axios.delete(`/api/users/${id}`)
